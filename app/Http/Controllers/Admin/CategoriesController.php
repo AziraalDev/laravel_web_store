@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Permissions\Category as Permission;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Categories\CreateRequest;
+use App\Http\Requests\Admin\Categories\EditRequest;
+use App\Http\Requests\Admin\Products\CreateRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
@@ -47,15 +48,25 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin/categories/edit', [
+            'categories' => Category::select(['id', 'name'])
+                ->whereNot('id', $category->id)
+                ->get(),
+            'category' => $category
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(EditRequest $request, Category $category)
     {
-        //
+        $data = $request->validated();
+        $data['slug'] = Str::slug($data['name']);
+
+        $category->updateOrFail($data);
+
+        return redirect()->route('admin.categories.edit', $category);
     }
 
     /**
@@ -63,6 +74,10 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $this->middleware('permission:' . Permission::DELETE->value);
+
+        $category->deleteOrFail();
+
+        return redirect()->route('admin.categories.index');
     }
 }
