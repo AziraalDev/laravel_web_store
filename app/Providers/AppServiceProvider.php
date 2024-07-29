@@ -2,10 +2,16 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contract\ProductsRepositoryContract;
+use App\Repositories\ProductsRepository;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    public array $bindings = [
+        ProductsRepositoryContract::class => ProductsRepository::class
+    ];
     /**
      * Register any application services.
      */
@@ -14,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
         if($this->app->isLocal()){
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
+
     }
 
     /**
@@ -21,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrapFive();
     }
 }
