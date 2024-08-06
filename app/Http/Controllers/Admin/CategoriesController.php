@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\Permissions\Category as Permission;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\EditRequest;
-use App\Http\Requests\Admin\Products\CreateRequest;
+use App\Http\Requests\Admin\Categories\CreateRequest;
 use App\Models\Category;
 use Illuminate\Support\Str;
 
@@ -39,6 +39,7 @@ class CategoriesController extends Controller
 
         Category::create($data);
 
+        notify()->success("Category [$data[name]] successfully created.");
         return redirect()->route('admin.categories.index');
     }
 
