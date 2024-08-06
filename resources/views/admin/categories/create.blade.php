@@ -18,6 +18,11 @@
                                    name="name"
                                    placeholder="Category name"
                                    value="{{ old('name') }}">
+                            @error('name')
+                            <span class="invalid-feedback d-block" role="alert">
+                               <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                     </div>
                     <div class="card-body p-2">
