@@ -1,0 +1,11 @@
+.images-wrapper-item {
+    position: relative;
+
+    &-remove {
+        /* instead of writing another block of code for .image-wrapper-item-remove */
+        position: absolute;
+        right: 0;
+        top: -5%;
+        border-radius: 100%;
+    }
+}
