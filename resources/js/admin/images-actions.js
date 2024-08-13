@@ -42,7 +42,7 @@ $(document).ready(function () {
                 headers: { "Content-Type": "multipart/form-data" }
             }
         ).then((response) => {
-            if (response.data.length > 0) {
+            if (response.data?.length > 0) {
                 for (const key in response.data) {
                     const imageBlock = template
                         .replace('_url_', response.data[key].url)
