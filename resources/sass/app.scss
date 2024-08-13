@@ -8,3 +8,26 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 @import 'admin/products-gallery';
+
+.product-card {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+
+    &-image {
+        height: 250px;
+    }
+
+    .card {
+        &-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        &-footer{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+    }
+}

@@ -63,9 +63,9 @@ class ProductsController extends Controller
      */
     public function update(EditRequest $request, Product $product, ProductsRepositoryContract $repository)
     {
-        if ($product = $repository->update($product, $request)) {
+        if ($repository->update($product, $request)) {
             notify()->success("Product '$product->title' updated successfully");
-            return redirect()->route('admin.products.index');
+            return redirect()->route('admin.products.edit', $product);
         }
         notify()->error("Something went wrong!");
         return redirect()->back()->withInput();
