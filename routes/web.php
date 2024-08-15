@@ -1,14 +1,22 @@
 <?php
 
-use App\Http\Controllers\Ajax\RemoveImageController;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/account', [App\Http\Controllers\Account\HomeController::class, 'index'])->middleware(['auth'])->name('home');
 
 Route::resource('products', \App\Http\Controllers\ProductsController::class)->only(['show', 'index']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('wishlist/{product}', [\App\Http\Controllers\WishlistController::class, 'add'])->name('wishlist.add');
+    Route::delete('wishlist/{product}', [\App\Http\Controllers\WishlistController::class, 'remove'])->name('wishlist.remove');
+
+    Route::name('account.')->prefix('account')->group(function () {
+       Route::get('/', [\App\Http\Controllers\Account\HomeController::class, 'index'])->name('home');
+       Route::get('wishlist', \App\Http\Controllers\Account\WishListController::class)->name('wishlist');
+    });
+});
 
 Route::name('cart.')->prefix('cart')->group(function() {
     Route::get('/', [\App\Http\Controllers\CartController::class, 'index'])->name('index');
