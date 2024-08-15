@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 py-5">
-            <h1>Top Categories</h1>
+            <h1>Top 5 Categories</h1>
             <div>
                 @each('categories.parts.label', $categories, 'category')
             </div>

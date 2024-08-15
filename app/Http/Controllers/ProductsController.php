@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
@@ -20,6 +19,11 @@ class ProductsController extends Controller
             $product->images->pluck('url')->toArray() // Extract URLs as an array
         );
 
-        return view('products.show', compact('product', 'gallery'));
+        $wishes = [
+            'exist' => auth()->check() ? auth()->user()->isWishedProduct($product, 'exist') : false,
+            'price' => auth()->check() ? auth()->user()->isWishedProduct($product, 'price') : false
+        ];
+
+        return view('products.show', compact('product', 'gallery', 'wishes'));
     }
 }
