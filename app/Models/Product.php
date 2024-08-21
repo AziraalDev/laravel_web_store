@@ -66,6 +66,12 @@ class Product extends Model
             'user_id'
         );
     }
+
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class);
+    }
+
     public function setThumbnailAttribute($image) // Mutator
     {
         $fileService = app(FileServiceContract::class); // via Container
