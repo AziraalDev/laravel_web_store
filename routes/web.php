@@ -12,6 +12,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::resource('products', \App\Http\Controllers\ProductsController::class)->only(['show', 'index']);
 Route::get('checkout', \App\Http\Controllers\CheckoutController::class)->name('checkout');
+Route::get('orders/{vendorOrderId}/thank-you', \App\Http\Controllers\Pages\ThankYouController::class);
 
 Route::middleware(['auth'])->group(function () {
     Route::post('wishlist/{product}', [\App\Http\Controllers\WishlistController::class, 'add'])->name('wishlist.add');
