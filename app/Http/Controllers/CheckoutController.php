@@ -12,6 +12,11 @@ class CheckoutController extends Controller
      */
     public function __invoke(Request $request)
     {
+        if (Cart::instance('cart')->countItems() === 0) {
+            notify()->warning('Your cart is empty!');
+            return redirect()->route('home');
+        }
+
         $cart = Cart::instance('cart'); // take from Cart
         $user = auth()->user(); // get user
 
