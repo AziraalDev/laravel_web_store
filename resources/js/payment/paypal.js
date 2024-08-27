@@ -70,7 +70,7 @@ paypal.Buttons({
                         title: 'Order was created',
                         position: 'topRight',
                         onClosing: () => {
-                            window.location.href = 'orders/{vendorOrderId}/thank-you'
+                            window.location.href = `/orders/${orderData.vendor_order_id}/thank-you`
                         }
                     })
             }).catch((err) => {

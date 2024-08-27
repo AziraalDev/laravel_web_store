@@ -22,6 +22,8 @@ Route::middleware(['auth'])->group(function () {
        Route::get('/', [\App\Http\Controllers\Account\HomeController::class, 'index'])->name('home');
        Route::get('wishlist', \App\Http\Controllers\Account\WishListController::class)->name('wishlist');
     });
+
+    Route::get('invoices/{order}', \App\Http\Controllers\InvoicesController::class)->name('invoice');
 });
 
 Route::name('cart.')->prefix('cart')->group(function() {
