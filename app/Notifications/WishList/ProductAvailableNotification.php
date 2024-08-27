@@ -26,7 +26,7 @@ class ProductAvailableNotification extends Notification
     {
         return (new MailMessage)
             ->line("Greatings, $user->name $user->lastname")
-            ->line("Product" . $this->product->title . " from your wish list is now available!")
+            ->line("Product " . $this->product->title . " from your wish list is now available!")
             ->line("Be the first one to buy it!")
             ->action('Visit product page', url(route('products.show', $this->product)))
             ->line('Thank you for using our application!');
