@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Storage;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -47,6 +48,10 @@ class Product extends Model
         'updated_at'
     ];
 
+    protected $casts = [
+        'price' => 'float',
+    ];
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
@@ -70,6 +75,11 @@ class Product extends Model
     public function orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class);
+    }
+
+    public function scopeExists(Builder $query): Builder
+    {
+        return $query->where('quantity', '>', 0);
     }
 
     public function setThumbnailAttribute($image) // Mutator
