@@ -7,6 +7,8 @@ use App\Listeners\Orders\CreatedListener;
 use App\Listeners\RestoreCartOnLogin;
 use App\Listeners\SaveCartOnLogout;
 use App\Models\Order;
+use App\Models\Product;
+use App\Policies\Api\ProductPolicy;
 use App\Policies\OrderPolicy;
 use App\Repositories\Contract\ImagesRepositoryContract;
 use App\Repositories\Contract\OrderRepositoryContract;
@@ -37,9 +39,7 @@ class AppServiceProvider extends ServiceProvider
         OrderRepositoryContract::class => OrderRepository::class,
         InvoiceServiceContract::class => InvoiceService::class,
     ];
-    /**
-     * Register any application services.
-     */
+
     public function register(): void
     {
         if($this->app->isLocal()){
@@ -48,24 +48,9 @@ class AppServiceProvider extends ServiceProvider
 
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         Paginator::useBootstrapFive();
-        Event::listen(
-            Login::class,
-            RestoreCartOnLogin::class
-        );
-        Event::listen(
-            Logout::class,
-            SaveCartOnLogout::class
-        );
-        Event::listen(
-            OrderCreatedEvent::class,
-            CreatedListener::class
-        );
-        //Gate::policy(Order::class, OrderPolicy::class);
+        Gate::policy(Product::class, ProductPolicy::class);
     }
 }
