@@ -12,8 +12,9 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use LaravelDaily\Invoices\Invoice;
+use NotificationChannels\Telegram\TelegramMessage;
 
-class OrderCreatedNotification extends Notification
+class OrderCreatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -32,7 +33,19 @@ class OrderCreatedNotification extends Notification
 
     public function via(User $user): array
     {
-        return ['mail'];
+        return $user?->telegram_id ? ['telegram', 'mail'] : ['mail'];
+    }
+
+    public function toTelegram(User $user)
+    {
+        logs()->info('notify admin by telegram');
+
+        return TelegramMessage::create()
+            ->to($user->telegram_id)
+            ->content('Hello, ' . $user->name . ' ' . $user->lastname)
+            ->line('You received a new order.')
+            ->line('')
+            ->line('Total: ' . $this->order->total . ' ' . config('paypal.currency'));
     }
 
     public function toMail(User $user): MailMessage

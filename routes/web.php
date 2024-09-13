@@ -54,3 +54,9 @@ Route::name('ajax.')->prefix('ajax')->group(function() {
         Route::post('order/{vendorOrderId}/capture', [\App\Http\Controllers\Ajax\Payments\PaypalController::class, 'capture'])->name('order.capture');
     });
 });
+
+Route::name('callbacks.')->prefix('callbacks')->group(function() {
+   Route::get('telegram', \App\Http\Controllers\Callbacks\JoinTelegramController::class)
+       ->middleware(['role:admin'])
+       ->name('telegram');
+});
