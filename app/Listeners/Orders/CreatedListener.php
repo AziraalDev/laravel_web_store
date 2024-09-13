@@ -27,7 +27,7 @@ class CreatedListener implements ShouldQueue
         logs()->info('CreatedListener::handle');
         Notification::send(
             User::role(Role::ADMIN->value)->get(), // Getting users
-            app(OrderCreatedNotification::class, ['order' => $event->order])
+            app(OrderCreatedNotification::class, ['order' => $event->order]) // Order as arg
         );
     }
 }

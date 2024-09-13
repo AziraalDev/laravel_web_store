@@ -9,6 +9,7 @@
         "anayarojo/shoppingcart": "^4.2",
         "appslabke/lara-izitoast": "^1.1",
         "kyslik/column-sortable": "v6.6.0",
+        "laravel-notification-channels/telegram": "^5.0",
         "laravel/framework": "^11.9",
         "laravel/telescope": "^5.1",
         "laravel/tinker": "^2.9",
